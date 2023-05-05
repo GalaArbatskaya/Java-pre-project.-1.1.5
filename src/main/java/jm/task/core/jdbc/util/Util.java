@@ -22,46 +22,45 @@ public class Util {
 
     }
 
-    public static Connection getConnection() {
-        Connection connection = null;
-        try {
-            Class.forName(DB_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-            connection.setAutoCommit(false);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Connection OK");
-        return connection;
+//    public static Connection getConnection() {
+//        Connection connection = null;
+//        try {
+//            Class.forName(DB_DRIVER);
+//            connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+//            connection.setAutoCommit(false);
+//        } catch (SQLException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("Connection OK");
+//        return connection;
 
-    }
+   // }
     private static SessionFactory sessionFactory;
     public static SessionFactory getSessionFactory () {
-        try {
-            Configuration conf = new Configuration();
-            Properties properties = new Properties();
-            properties.put(Environment.DRIVER, DB_DRIVER);
-            properties.put(Environment.URL, DB_URL);
-            properties.put(Environment.USER, DB_USERNAME);
-            properties.put(Environment.PASS, DB_PASSWORD);
-            properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
-            properties.put(Environment.SHOW_SQL, "true");
-            properties.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-            properties.put(Environment.HBM2DDL_AUTO, "");
-            conf.setProperties(properties);
-            conf.addAnnotatedClass(User.class);
+        if (sessionFactory == null) {
+            try {
+                Configuration conf = new Configuration();
+                Properties properties = new Properties();
+                properties.put(Environment.DRIVER, DB_DRIVER);
+                properties.put(Environment.URL, DB_URL);
+                properties.put(Environment.USER, DB_USERNAME);
+                properties.put(Environment.PASS, DB_PASSWORD);
+                properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+                properties.put(Environment.SHOW_SQL, "true");
+                properties.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+                properties.put(Environment.HBM2DDL_AUTO, "");
+                conf.setProperties(properties);
+                conf.addAnnotatedClass(User.class);
 
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                    .applySettings(conf.getProperties()).build();
+                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                        .applySettings(conf.getProperties()).build();
 
-            sessionFactory = conf.buildSessionFactory(serviceRegistry);
-        } catch (HibernateException e) {
-            throw new ExceptionInInitializerError(e);
+                sessionFactory = conf.buildSessionFactory(serviceRegistry);
+            } catch (HibernateException e) {
+                e.printStackTrace(); // throw new ExceptionInInitializerError(e);
+            }
         }
         return sessionFactory;
     }
-
-//    public static void closeConnection() {
-//    }
 }
 
