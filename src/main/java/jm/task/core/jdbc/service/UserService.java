@@ -11,7 +11,7 @@ public interface UserService {
 
     void saveUser(String name, String lastName, byte age) throws SQLException;
 
-    void removeUserById(long id) throws SQLException;
+    void removeUserById(long id); //throws SQLException;
 
     List<User> getAllUsers();
 

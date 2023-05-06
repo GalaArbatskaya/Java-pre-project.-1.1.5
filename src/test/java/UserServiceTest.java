@@ -7,8 +7,8 @@ import org.junit.Test;
 import java.util.List;
 
 public class UserServiceTest {
-    private final UserService userService = new UserServiceImpl();
 
+    private final UserService userService = new UserServiceImpl();
     private final String testName = "Gala";
     private final String testLastName = "Arbatskaya";
     private final byte testAge = 42;

@@ -33,8 +33,8 @@ public class Util {
 //        }
 //        System.out.println("Connection OK");
 //        return connection;
-
-   // }
+//
+//    }
     private static SessionFactory sessionFactory;
     public static SessionFactory getSessionFactory () {
         if (sessionFactory == null) {
@@ -48,7 +48,7 @@ public class Util {
                 properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
                 properties.put(Environment.SHOW_SQL, "true");
                 properties.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-                properties.put(Environment.HBM2DDL_AUTO, "");
+                properties.put(Environment.HBM2DDL_AUTO, "create-drop");
                 conf.setProperties(properties);
                 conf.addAnnotatedClass(User.class);
 
